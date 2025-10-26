@@ -47,22 +47,6 @@ SweetAlert2 (Modals and alerts)
 
 Google Fonts (For the 'Fira Code' monospace font)
 
-🚀 Getting Started
-
-This is a static frontend-only project. No build process or server is required to run it locally.
-
-Clone the repository:
-
-git clone [https://github.com/YOUR_USERNAME/netvora.git](https://github.com/YOUR_USERNAME/netvora.git)
-
-
-Navigate to the project directory:
-
-cd netvora
-
-
-Open index.html in your favorite web browser.
-
 ⚠️ Important Note: Desktop Only
 
 Netvora is intentionally designed as a desktop-first application to ensure the best layout and data presentation.
