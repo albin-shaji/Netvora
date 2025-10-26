@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Netvora — Dashboard</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+<style>
+:root{
+  --bg:#0f1720; --card:#12151a; --muted:#9aa3ab; --text:#e6eef3;
+  --accent:#4da6ff; /* professional blue */
+  --danger:#ff6b6b; --success:#28a745; 
+  --glass:rgba(255,255,255,0.03); --border:rgba(255,255,255,0.06); --card-radius:14px;
+}
+*{box-sizing:border-box;}
+body{margin:0; min-height:100vh; background:linear-gradient(180deg,#071018,#0b1320); font-family:'Fira Code',monospace; color:var(--text); display:flex; justify-content:center; padding:20px;}
+.container{width:100%; max-width:1200px; border-radius:var(--card-radius); overflow:hidden; background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01)); border:1px solid var(--border); box-shadow:0 10px 40px rgba(2,6,23,0.7); transition:0.3s;}
+@media(max-width:900px){.container{max-width:95%; padding:16px;}}
+.header{display:flex; justify-content:space-between; align-items:center; padding:20px; border-bottom:1px solid rgba(255,255,255,0.03);}
+.header h1{margin:0; font-size:24px; color:var(--accent); display:flex; align-items:center; gap:10px;}
+.header .meta{font-size:14px; color:var(--muted);}
+.main{padding:24px; display:grid; gap:24px;}
+.grid{display:grid; gap:24px;}
+@media(min-width:900px){.main{grid-template-columns:1fr 1fr;}}
+.card{background:var(--card); padding:22px; border-radius:12px; border:1px solid rgba(255,255,255,0.02);}
+.card h2{font-size:17px; margin-bottom:14px; color:var(--accent); display:flex; align-items:center; gap:10px;}
+.row{display:flex; justify-content:space-between; align-items:center; gap:8px; padding:10px 0; border-bottom:1px dashed rgba(255,255,255,0.02);}
+.row:last-child{border-bottom:none;}
+.label{color:var(--muted); font-weight:500; width:40%; font-size:14px;}
+.value{width:60%; text-align:right; font-weight:600; word-break:break-word; display:flex; justify-content:flex-end; align-items:center; gap:6px; font-size:14px;}
+.mono{font-family:'Fira Code',monospace; color:var(--text);}
+.badge{padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid rgba(255,255,255,0.03); color:var(--muted); background:var(--glass);}
+
+/* --- THIS IS THE ORIGINAL, CORRECT .btn STYLE --- */
+.btn{
+    background:transparent; 
+    border:none; 
+    cursor:pointer; 
+    color:var(--muted);
+}
+.btn:hover{color:var(--accent);}
+
+/* --- NEW CLASS FOR HEADER BUTTONS ONLY --- */
+.header-btn {
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+/* NEW CLASS FOR 'ABOUT' BUTTON COLOR */
+.btn-about {
+    color: var(--danger);
+}
+.btn-about:hover {
+    color: #ff8c8c; /* Lighter red for hover */
+}
+
+/* --- NEW CLASS FOR COPY BUTTONS ONLY --- */
+.btn-copy {
+    color: var(--accent); /* Default blue */
+}
+.btn-copy:hover {
+    color: var(--danger); /* Hover red */
+}
+
+
+.site-footer {padding: 20px 24px; font-size: 14px; color: var(--muted);}
+.footer-top {display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;}
+.footer-creator a {color: var(--accent); text-decoration: none; font-weight: 600;}
+.footer-creator a:hover {text-decoration: underline;}
+.footer-socials a {color: var(--muted); font-size: 18px; margin-left: 16px; transition: color 0.2s;}
+.footer-socials a:hover {color: var(--text);}
+.footer-bottom {padding-top: 16px; font-size: 13px; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; color: var(--muted); flex-wrap: wrap; gap: 10px;}
+@media(max-width: 768px) {.footer-top {flex-direction: column; text-align: center; gap: 12px;} .footer-socials a {margin: 0 8px;} .footer-bottom {flex-direction: column; align-items: center;}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="header">
+    <h1>
+      <a href="https://albinshaji.com/iplookup" style="text-decoration: none; color: inherit;">
+        <i class="fa-solid fa-network-wired"></i> Netvora
+      </a>
+    </h1>
+
+    <div class="meta">
+      <span id="timestamp">Last updated: —</span>
+      
+      <!-- APPLIED .btn, .header-btn, and .btn-about -->
+      <a href="about.html" class="btn header-btn btn-about" title="About Netvora">
+        <i class="fa-solid fa-circle-info"></i> About
+      </a>
+
+      <!-- APPLIED .btn and .header-btn -->
+      <button id="refresh-all" class="btn header-btn" title="Refresh All">
+        <i class="fa-solid fa-arrows-rotate"></i> Refresh All
+      </button>
+    </div>
+  </div>
+
+  <div class="main">
+    <!-- General Info -->
+    <div class="grid">
+      <div class="card">
+        <h2><i class="fa-solid fa-circle-info"></i> General & Geo Info</h2>
+        <div class="row">
+          <div class="label">IPv4</div>
+          <div class="value mono">
+            <span id="ipv4">—</span>
+            <!-- ADDED .btn-copy CLASS -->
+            <i id="copy-ipv4" class="fa-regular fa-clipboard btn btn-copy" title="Copy IPv4"></i>
+          </div>
+        </div>
+        <div class="row">
+          <div class="label">IPv6</div>
+          <div class="value mono">
+            <span id="ipv6">—</span>
+            <!-- ADDED .btn-copy CLASS -->
+            <i id="copy-ipv6" class="fa-regular fa-clipboard btn btn-copy" title="Copy IPv6"></i>
+          </div>
+        </div>
+        <div class="row"><div class="label">Continent</div><div class="value" id="continent">—</div></div>
+        <div class="row"><div class="label">Country</div><div class="value" id="country">—</div></div>
+        <div class="row"><div class="label">Region / City</div><div class="value" id="region">—</div></div>
+        <div class="row">
+          <div class="label">Coordinates</div>
+          <div class="value mono">
+            <span id="coordinates">—</span>
+            <!-- ADDED .btn-copy CLASS -->
+            <i id="copy-coords" class="fa-regular fa-clipboard btn btn-copy" title="Copy Coordinates"></i>
+          </div>
+        </div>
+        <div class="row"><div class="label">ISP · ASN</div><div class="value" id="isp">—</div></div>
+        <div class="row"><div class="label">Organization</div><div class="value" id="org">—</div></div>
+        <div class="row"><div class="label">Timezone</div><div class="value" id="timezone">—</div></div>
+        <div class="row"><div class="label">Proxy / VPN</div><div class="value" id="vpn">—</div></div>
+      </div>
+    </div>
+
+    <!-- Browser & Connection -->
+    <div class="grid">
+      <div class="card">
+        <h2><i class="fa-solid fa-desktop"></i> Browser & Device</h2>
+        <div class="row"><div class="label">Browser</div><div class="value"id="browser">—</div></div>
+        <div class="row"><div class="label">OS</div><div class="value" id="os">—</div></div>
+        <div class="row"><div class="label">Screen</div><div class="value" id="screen">—</div></div>
+        <div class="row"><div class="label">User Agent</div><div class="value mono" id="useragent">—</div></div>
+      </div>
+
+      <div class="card">
+        <h2><i class="fa-solid fa-globe"></i> Connection Details</h2>
+        <div class="row"><div class="label">Status</div><div class="value" id="status-summary">Initializing…</div></div>
+      </div>
+    </div>
+  </div>
+
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="footer-creator">
+        Crafted with <i class="fa-solid fa-heart" style="color: var(--danger);"></i>
+        by <a href="https://albinshaji.com" target="_blank" rel="noopener noreferrer">Albin Shaji</a>
+      </div>
+      <div class="footer-socials">
+        <a href="https://www.instagram.com/albinshaji.03" target="_blank" rel="noopener noreferrer" title="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://wa.me/919526449307?text=Hey%20Albin!%20I%20came%20across%20your%20portfolio%20and%20wanted%20to%20connect." target="_blank" rel="noopener noreferrer" title="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+        <a href="https://github.com/albin-shaji" target="_blank" rel="noopener noreferrer" title="GitHub"><i class="fab fa-github"></i></a>
+        <a href="https://twitter.com/albinshaji_39" target="_blank" rel="noopener noreferrer" title="Twitter"><i class="fab fa-twitter"></i></a>
+        <a href="https://www.linkedin.com/in/albin-shaji-530192340" target="_blank" rel="noopener noreferrer" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div>Powered by <span class="badge">ipwho.is, ipapi.co & ipify.org</span></div>
+    </div>
+  </footer>
+</div>
+
+<script>
+// Utility
+function setText(id, text){ const el = document.getElementById(id); if(el) el.textContent=text; }
+function copyToClipboard(text,label){ navigator.clipboard.writeText(text).then(()=>{ Swal.fire({html:`${label} <span style="color:#4da6ff;font-weight:600">${text}</span> copied`,background:'#12151a',color:'#e6eef3',icon:'success',timer:2000,showConfirmButton:false,timerProgressBar:true,iconColor:'#4da6ff'});});}
+
+// Copy buttons
+document.getElementById('copy-ipv4').addEventListener('click',()=>copyToClipboard(document.getElementById('ipv4').textContent,'IPv4'));
+document.getElementById('copy-ipv6').addEventListener('click',()=>copyToClipboard(document.getElementById('ipv6').textContent,'IPv6'));
+document.getElementById('copy-coords').addEventListener('click',()=>copyToClipboard(document.getElementById('coordinates').textContent,'Coordinates'));
+
+// Fetch IP Info
+async function fetchIPInfo(){
+  try{
+    const res4=await fetch('https://api.ipify.org?format=json'); const data4=await res4.json(); setText('ipv4',data4.ip);
+  }catch(e){ setText('ipv4','Error'); }
+  try{
+    const res6=await fetch('https://api6.ipify.org?format=json'); const data6=await res6.json(); setText('ipv6',data6.ip);
+  }catch(e){ setText('ipv6','N/A'); }
+
+  try{
+    const resGeo=await fetch('https://ipwho.is/'); const data=await resGeo.json();
+    if(!data.success) throw new Error(data.message||'API failed');
+    setText('continent',data.continent);
+    setText('country',`${data.country} (${data.country_code})`);
+    setText('region',`${data.region} · ${data.city}`);
+    setText('coordinates',`${data.latitude}, ${data.longitude}`);
+    setText('isp',`${data.connection?.isp} · ASN ${data.connection?.asn}`);
+    setText('org',data.connection?.org||'—');
+    setText('timezone',data.timezone?.id||'—');
+    setText('vpn',data.security?.proxy?'Yes':'No');
+    setText('status-summary',`Online · ${data.country} · ${data.connection?.isp}`);
+  }catch(e){
+    Swal.fire({title:'Error',text:'No Internet Connection',background:'#12151a',color:'#e6eef3',icon:'error',showConfirmButton:false,timer:2000,timerProgressBar:true,iconColor:'#ff4c4c'});
+    setText('status-summary','No Internet Connection');
+  }
+}
+
+// Browser info
+function detectBrowser(){
+  const ua=navigator.userAgent; setText('useragent',ua); setText('screen',`${window.screen.width}×${window.screen.height}`);
+  const osMatch=ua.match(/\(([^)]+)\)/); setText('os',osMatch?osMatch[1]:'—');
+  const browserMatch=ua.match(/(Firefox|Chrome|Safari|Edge|Opera|MSIE|Trident)\/?\s*(\d+)/);
+  setText('browser',browserMatch?`${browserMatch[1]} ${browserMatch[2]}`:'—');
+}
+
+// Refresh All
+document.getElementById('refresh-all').addEventListener('click',async()=>{
+  setText('timestamp','Last updated: Updating…');
+  setText('status-summary','Refreshing…');
+  await fetchIPInfo(); detectBrowser();
+  const now=new Date(); setText('timestamp',`Last updated: ${now.toLocaleString()}`);
+});
+
+// Initial load
+(async()=>{
+  const now=new Date(); setText('timestamp',`Last updated: ${now.toLocaleString()}`);
+  await fetchIPInfo(); detectBrowser();
+})();
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+    if(isMobile){
+        document.body.innerHTML = '';
+        Swal.fire({
+            title: 'Unsupported Device',
+            html: 'Please use a <strong><span style="color:#4da6ff">Desktop</span></strong> or <strong><span style="color:#4da6ff">Laptop</span></strong> to access this site.',
+            icon: 'warning',
+            background:'#12151a',
+            color:'#e6eef3',
+            showConfirmButton: false,
+            timer: 5000,
+            timerProgressBar: true,
+            iconColor: '#ff6b6b'
+        });
+    } 
+});
+</script>
+</body>
+</html>
