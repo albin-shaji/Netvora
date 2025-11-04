@@ -5,7 +5,7 @@ In one glance, you can see exactly what details your connection reveals to the w
 
 It's a quick, simple, and privacy-focused tool for developers, network administrators, or anyone curious about their digital footprint.
 
-### [➡️ View Live Demo](https://albinshaji.com/iplookup)
+### [➡️ View Live Demo](https://albinshaji.com/projects/netvora/)
 
 ---
 
@@ -76,3 +76,4 @@ Netvora/
 ├── about.html
 ├── LICENSE
 └── README.md
+
