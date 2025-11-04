@@ -1,0 +1,71 @@
+:root{
+  --bg:#0f1720; --card:#12151a; --muted:#9aa3ab; --text:#e6eef3;
+  --accent:#4da6ff; /* professional blue */
+  --danger:#ff6b6b; --success:#28a745; 
+  --glass:rgba(255,255,255,0.03); --border:rgba(255,255,255,0.06); --card-radius:14px;
+}
+*{box-sizing:border-box;}
+body{margin:0; min-height:100vh; background:linear-gradient(180deg,#071018,#0b1320); font-family:'Fira Code',monospace; color:var(--text); display:flex; justify-content:center; padding:20px;}
+.container{width:100%; max-width:1200px; border-radius:var(--card-radius); overflow:hidden; background:linear-gradient(180deg,rgba(255,255,255,0.02),rgba(255,255,255,0.01)); border:1px solid var(--border); box-shadow:0 10px 40px rgba(2,6,23,0.7); transition:0.3s;}
+@media(max-width:900px){.container{max-width:95%; padding:16px;}}
+.header{display:flex; justify-content:space-between; align-items:center; padding:20px; border-bottom:1px solid rgba(255,255,255,0.03);}
+.header h1{margin:0; font-size:24px; color:var(--accent); display:flex; align-items:center; gap:10px;}
+.header .meta{font-size:14px; color:var(--muted);}
+.main{padding:24px; display:grid; gap:24px;}
+.grid{display:grid; gap:24px;}
+@media(min-width:900px){.main{grid-template-columns:1fr 1fr;}}
+.card{background:var(--card); padding:22px; border-radius:12px; border:1px solid rgba(255,255,255,0.02);}
+.card h2{font-size:17px; margin-bottom:14px; color:var(--accent); display:flex; align-items:center; gap:10px;}
+.row{display:flex; justify-content:space-between; align-items:center; gap:8px; padding:10px 0; border-bottom:1px dashed rgba(255,255,255,0.02);}
+.row:last-child{border-bottom:none;}
+.label{color:var(--muted); font-weight:500; width:40%; font-size:14px;}
+.value{width:60%; text-align:right; font-weight:600; word-break:break-word; display:flex; justify-content:flex-end; align-items:center; gap:6px; font-size:14px;}
+.mono{font-family:'Fira Code',monospace; color:var(--text);}
+.badge{padding:4px 8px; border-radius:999px; font-size:12px; border:1px solid rgba(255,255,255,0.03); color:var(--muted); background:var(--glass);}
+
+/* --- THIS IS THE ORIGINAL, CORRECT .btn STYLE --- */
+.btn{
+    background:transparent; 
+    border:none; 
+    cursor:pointer; 
+    color:var(--muted);
+}
+.btn:hover{color:var(--accent);}
+
+/* --- NEW CLASS FOR HEADER BUTTONS ONLY --- */
+.header-btn {
+    font-family: 'Fira Code', monospace;
+    font-size: 14px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    vertical-align: middle;
+    margin-left: 8px;
+}
+
+/* NEW CLASS FOR 'ABOUT' BUTTON COLOR */
+.btn-about {
+    color: var(--danger);
+}
+.btn-about:hover {
+    color: #ff8c8c; /* Lighter red for hover */
+}
+
+/* --- NEW CLASS FOR COPY BUTTONS ONLY --- */
+.btn-copy {
+    color: var(--accent); /* Default blue */
+}
+.btn-copy:hover {
+    color: var(--danger); /* Hover red */
+}
+
+
+.site-footer {padding: 20px 24px; font-size: 14px; color: var(--muted);}
+.footer-top {display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; margin-bottom: 16px;}
+.footer-creator a {color: var(--accent); text-decoration: none; font-weight: 600;}
+.footer-creator a:hover {text-decoration: underline;}
+.footer-socials a {color: var(--muted); font-size: 18px; margin-left: 16px; transition: color 0.2s;}
+.footer-socials a:hover {color: var(--text);}
+.footer-bottom {padding-top: 16px; font-size: 13px; border-top: 1px solid var(--border); display: flex; justify-content: center; align-items: center; color: var(--muted); flex-wrap: wrap; gap: 10px;}
+@media(max-width: 768px) {.footer-top {flex-direction: column; text-align: center; gap: 12px;} .footer-socials a {margin: 0 8px;} .footer-bottom {flex-direction: column; align-items: center;}}
