@@ -59,21 +59,3 @@ To ensure the best layout and data presentation, Netvora is designed as a **desk
 ## 📄 License
 
 This project is licensed under the MIT License - see the [LICENSE] file for details.
-
-## 📁 Folder Structure
-
-Netvora/
-│
-├── css/
-│   ├── about.css
-│   └── index.css
-│
-├── js/
-│   ├── device.js
-│   └── main.js
-│
-├── index.html
-├── about.html
-├── LICENSE
-└── README.md
-
